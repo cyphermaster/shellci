@@ -1,12 +1,12 @@
 #!/bin/bash
 screen -S shellci -X quit
 # Murder VirtualBox for this user...
-vboxpids=$(ps -Ao pid,comm | grep VBox | awk '{print $1}')
+vboxpids=$(ps -o pid,comm -u $USER | grep VBox | awk '{print $1}')
 if [ -n "${vboxpids}" ]; then
-    echo "Killing all VirtualBoxes (-TERM)"
+    echo "Killing all VirtualBoxes (-TERM) for $USER"
     kill ${vboxpids}
     sleep 10
-    echo "Killing all VirtualBoxes (-KILL)"
+    echo "Killing all VirtualBoxes (-KILL) for $USER"
     kill -9 ${vboxpids} 2>/dev/null
     sleep 1
 fi
