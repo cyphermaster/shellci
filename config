@@ -12,3 +12,5 @@ export CI_TEST_CASE=${CI}/vagrant-test-template
 # Uncommon this line to trigger on every single event from gerrit
 # WARNING: don't do this with voting enabled :-)
 #export CI_PROMISC=yes
+# Username of the CI review.openstack.org user
+export CI_USERNAME=m.paolino
