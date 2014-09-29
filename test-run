@@ -1,6 +1,6 @@
 #!/bin/bash
 # Run a test in the current directory.
-# Execute ./runtest.sh and store the result in ./test-result.txt
+# Execute ./runVM.sh and store the result in ./test-result.txt
 # If the test fails for an unknown reason then schedule a rerun.
 
 # Run a test and create ./test-result.txt
@@ -52,6 +52,6 @@ echo "${date} ${uuid} TEST   ${project} ${ref}" >> ${CI?}/log/activity.log
 [ -f event.json ]
 ( flock -xn 9 || exit 1 ) 9>build.lock
 set +e
-./runtest.sh
+./runVM.sh
 status=$?
 

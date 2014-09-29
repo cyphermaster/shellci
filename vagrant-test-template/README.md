@@ -8,6 +8,6 @@ You can customize the dev-stack and the tempest tests modifying the files local.
 To test it, just run:
 ```
 cp local.conf.template local.conf
-./runtest.sh
+./runVM.sh
 ```
 

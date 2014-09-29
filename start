@@ -27,6 +27,6 @@ echo "Starting gerrit-stream"
 screen -S shellci -X screen -t gerrit-stream ${CI}/gerrit-stream
 for shard in $(seq 0 $[${shards}-1]); do
     echo "Starting shard${shard}"
-    screen -S shellci -X screen -t "shard${shard}" ${CI}/run-tests $shard $shards
+    screen -S shellci -X screen -t "shard${shard}" ${CI}/main_loop $shard $shards
 done
 
