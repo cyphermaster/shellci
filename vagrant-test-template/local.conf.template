@@ -11,5 +11,14 @@ SCREEN_LOGDIR=/vagrant/screen-log
 NOVA_BRANCH=%nova_branch%
 NEUTRON_BRANCH=%neutron_branch%
 
-QEMU_VERSION=2.1.0
-LIBVIRT_VERSION=1.2.7
+QEMU_VERSION=2.1.2
+LIBVIRT_VERSION=1.2.8
+
+disable_service n-net
+enable_service q-svc
+enable_service q-agt
+enable_service q-dhcp
+enable_service q-l3
+enable_service q-meta
+# Optional, to enable tempest configuration as part of devstack
+enable_service tempest
