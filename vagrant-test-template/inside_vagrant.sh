@@ -19,15 +19,20 @@ echo "ok" >> /vagrant/progress.txt
 
 # Install and run tempest
 echo -n "$(date '+%F %T') tempest.. " >> /vagrant/progress.txt
-#cd $HOME
-#git clone git://git.openstack.org/openstack/tempest.git
-#cd tempest
-#sudo python ./setup.py install
 cd /opt/stack/tempest
 testr init
 testr run tempest.api.network | tee -a /vagrant/tempest.log
-testr run tempest.scenario.test_network_advanced_server_ops | tee -a /vagrant/tempest.log
-testr run tempest.scenario.test_network_basic_ops | tee -a /vagrant/tempest.log
+
+#Searching for test IDs
+x=$(grep "(id=" /vagrant/tempest.log)
+#removing parenthesis
+y="${x//[()=]/ }"
+
+TEST_ID=$(echo ${y} | awk '{print $3}' | sed 's/\,//g')
+
+echo "List of tempest tests successfully ran (id="${TEST_ID}"):" >> /vagrant/tempest_test_list.txt
+grep -ri successful .testrepository/${TEST_ID} | awk '{ gsub(/\[/, "\ "); print $1 " " $2}' >> /vagrant/tempest_test_list.txt
+
 if grep PASSED /vagrant/tempest.log; then
     echo "SUCCESS" >> /vagrant/progress.txt
 else
