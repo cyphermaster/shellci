@@ -12,16 +12,14 @@ uuid=$(basename $(pwd))
 status="none"
 # This function will be called at exit to record what happened.
 record_result () {
+    echo "snabb-nfv ${CI_URL?}/$(date "+%F")/$(basename $(pwd))" > test-result.txt
     (case $status in                 # Interpret test script exit code
-        100) echo "PASSED: Test ran successfully (100)"          ;;
-        101) echo "FAILED: Test failed with cause (101)"        ;;
-        102) echo "SKIPPED: Test intentionally skipped (102)"    ;;
-        103) echo "REVIEW: Test result needs manual review (103)";;
-        *)   echo "HAZARD: Test exited with unrecognized status ($status)";;
-     esac) > test-result.txt
-    echo >> test-result.txt
-    echo "Log: ${CI_URL?}/tests/$(basename $(pwd))" >> test-result.txt
-    echo >> test-result.txt
+        100) echo "SUCCESS: Test ran successfully (100)"          ;;
+        101) echo "FAILURE: Test failed with cause (101)"        ;;
+        102) echo "FAILURE: SKIPPED Test intentionally skipped (102)"    ;;
+        103) echo "FAILURE: REVIEW Test result needs manual review (103)";;
+        *)   echo "FAILURE: HAZARD: Test exited with unrecognized status ($status)";;
+     esac) >> test-result.txt
     [ -f review-comment ] && cat review-comment >> test-result.txt
     date=$(date "+%F %T")
     echo "${date} ${uuid} DONE   $(head -1 test-result.txt)" >> ${CI?}/log/activity.log

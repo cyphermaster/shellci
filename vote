@@ -7,8 +7,8 @@ source ${CI?}/config
 
 [ -f test-result.txt ] || (echo "No test-result to vote on" >&2; exit 1)
 vote="0"
-head -1 test-result.txt | grep -q "^PASSED" && vote="+1"
-head -1 test-result.txt | grep -q "^FAILED" && vote="-1"
+head -1 test-result.txt | grep -q "^SUCCESS" && vote="+1"
+head -1 test-result.txt | grep -q "^FAILURE" && vote="-1"
 
 uuid=$(basename $(pwd))
 date=$(date "+%F %T")
